@@ -62,6 +62,8 @@ This approach ensures a user-friendly experience when dealing with Song2Vec, acc
 4. Choose to train a new/existing model or explore an existing model
 5. Follow the prompts and enjoy!
 
+> Note: If training a new model, the Spotify 1 Million Playlist Dataset is not included in the repo, but can be found [here](https://www.aicrowd.com/challenges/spotify-million-playlist-dataset-challenge). Also, new models should either define a new class that implements `MusicVecModelInterface` from `models.py` or use one of the existing classes.
+
 ## V. Future Plans:
 - Obtain Spotify featured playlist data to fill the missing data gap from October 2017 to present
 - Leverage the Spotipy API to allow users to update the models using their own playlist data
