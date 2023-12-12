@@ -171,28 +171,28 @@ class Song2VecModel(MusicVecModelInterface):
         first_index = e.find("'")
         second_index = e.find("'", first_index + 1)
         track_uri = e[first_index + 1:second_index]
-        return getTrackNameAndArtists(sp.track(track_uri)) + e[second_index + 1:]
+        return getTrackNameAndArtists(self.sp.track(track_uri)) + e[second_index + 1:]
         
     def most_similar(self, item, topn):
         with handle_exceptions(self):
             output = self.model.wv.most_similar(positive=[item], topn=topn)
-            func = lambda track_uri: getTrackNameAndArtists(sp.track(track_uri))
+            func = lambda track_uri: getTrackNameAndArtists(self.sp.track(track_uri))
             printMostSimilarOutput(output, func=func)
 
     def doesnt_match(self, item_list):
         with handle_exceptions(self, multiple_items=True):
             track_uri = self.model.wv.doesnt_match(item_list)
-            print(getTrackNameAndArtists(sp.track(track_uri)) + " doesn't match the rest!")
+            print(getTrackNameAndArtists(self.sp.track(track_uri)) + " doesn't match the rest!")
     
     def similarity(self, item1, item2):
         with handle_exceptions(self, multiple_items=True):
             output = self.model.wv.similarity(item1, item2)
-            print(f"{getTrackNameAndArtists(sp.track(item1))} and {getTrackNameAndArtists(sp.track(item2))} are {round(output * 100, 2)}% similar!")
+            print(f"{getTrackNameAndArtists(self.sp.track(item1))} and {getTrackNameAndArtists(self.sp.track(item2))} are {round(output * 100, 2)}% similar!")
 
     def arithmetic(self, positive_items, negative_items, topn):
         with handle_exceptions(self, multiple_items=True):
             output =  self.model.wv.most_similar(positive=positive_items, negative=negative_items, topn=topn)
-            func = lambda track_uri: getTrackNameAndArtists(sp.track(track_uri))
+            func = lambda track_uri: getTrackNameAndArtists(self.sp.track(track_uri))
             printMostSimilarOutput(output, func=func)
 
 
