@@ -1,16 +1,16 @@
 # MusicVec - Vector Embeddings for Music (Artists and Songs)
 ## Table of Contents
-I. [Summary](https://github.com/AneeshPatel/MusicVec/README.md#summary)
+I. [Summary](https://github.com/AneeshPatel/MusicVec#i-summary)
 
-II. [What Do Vector Embeddings Even Mean?](https://github.com/AneeshPatel/MusicVec/README.md#what-do-vector-embeddings-even-mean)
+II. [What Do Vector Embeddings Even Mean?](https://github.com/AneeshPatel/MusicVec#ii-what-do-vector-embeddings-even-mean)
 
-III. [How Does the Model Work?](https://github.com/AneeshPatel/MusicVec/README.md#how-does-the-model-work)
+III. [How Does the Model Work?](https://github.com/AneeshPatel/MusicVec#iii-how-does-the-model-work)
 
-IV. [Using MusicVec](https://github.com/AneeshPatel/MusicVec/README.md#using-musicvec)
+IV. [Using MusicVec](https://github.com/AneeshPatel/MusicVec#iv-using-musicvec)
 
-V. [Future Plans](https://github.com/AneeshPatel/MusicVec/README.md#future-plans)
+V. [Future Plans](https://github.com/AneeshPatel/MusicVec#v-future-plans)
 
-VI. [References](https://github.com/AneeshPatel/MusicVec/README.md#references)
+VI. [References](https://github.com/AneeshPatel/MusicVec#vi-references)
 
 ## I. Summary
 This project utilizes vector embeddings to analyze user-generated Spotify playlist data from January 2010 to October 2017 to generate models similar to Word2Vec but tailored for artists (Artist2Vec) and songs (Song2Vec). The infrastructure also allows users to employ their own data for custom model training or to update the pre-trained Artist2Vec and Song2Vec models.
@@ -18,19 +18,19 @@ This project utilizes vector embeddings to analyze user-generated Spotify playli
 ## II. What Do Vector Embeddings Even Mean?
 Vector embeddings are a fundamental concept of a unique Natural Language Processing technique (Word2Vec) that examines words based on their context and represents them as numeric vectors. This enables various operations on words, such as finding similar words, identifying outliers in a list of words, calculating similarity percentages between words, and even performing arithmetic operations (addition and subtraction) between words. For instance, in word arithmetic, `KING` - `MAN` + `WOMAN` equals `QUEEN`, and `BIGGER` - `BIG` + `SMALL` equals `SMALLER`. This project extends this idea to artists and songs.
 
-## A) How Does the Model Work?
-### i) High-Level
+## III. How Does the Model Work?
+### A) High-Level
 Conceptually, Word2Vec works by learning relationships between words and their context words that appear shortly before or after them in sentences. This model functions similarly, by learning relationships between artists or songs and their neighboring entities within playlists.
 
-### ii) Technical
-#### a. Dataset and Pre-Processing
+### B) Technical
+#### i) Dataset and Pre-Processing
 The 1 million playlists dataset was preprocessed to iteratively yield one track from a playlist at a time, allowing efficient utilization of the Gensim Python Word2Vec module. For both models, "sentences" were represented by individual playlists, and "words" were represented by either the `artist_name` or the unique `track_uri` for each song, for Artist2Vec and Song2Vec respectively.
 
 `artist_name` was chosen for Artist2Vec because of its immediate interpretability; however, a future step may involve considering the switch to `artist_uri` for a more robust representation of different artists who share the same name.
 
 The choice to use `track_uri` for Song2Vec, rather than just the song name, was motivated by the need to account for potential duplicate song titles across different artists, ensuring an unambiguous representation of individual tracks in the model.
 
-#### b. Training the Models
+#### ii) Training the Models
 Both models share the following hyperparameters:
 - `window` of 10
 - 7 `workers` threads
@@ -39,7 +39,7 @@ Both models share the following hyperparameters:
 
 Each model took upwards of 6 hours to complete training on a 2020 M1 MacBook Pro. Due to the extensive training time, different hyperparameters were not experimented with. 
 
-#### c. Using the Models
+#### iii) Using the Models
 Gensim allows trained models to be saved, loaded, and updated with additional data. Both models were saved, and the appropriate one is loaded according to the user's requests. 
 
 ##### Artist2Vec
